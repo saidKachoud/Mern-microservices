@@ -9,5 +9,5 @@ const server = express();
 // example: server.post('/login', login)
 
 server.listen(process.env.PORT, () =>{
-    console.log(`User micro-services listenning on PORT ${process.env.PORT}`);
+    console.log(`User services listenning on PORT ${process.env.PORT}`);
 })
