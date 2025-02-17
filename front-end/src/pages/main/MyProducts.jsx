@@ -2,7 +2,7 @@ import React from 'react'
 import { SideBar } from '../../components/UI/SideBar'
 import { Product } from '../../components/UI/Product'
 
-export const Products = () => {
+export const MyProducts = () => {
   return (
     <div className='flex'>
       <SideBar />
@@ -10,11 +10,7 @@ export const Products = () => {
         <div>
           <div className='flex justify-between'>
             <div> 
-              <h1 className='text-3xl font-semibold'>Products goes here</h1>
-            </div>
-            <div className='flex gap-2'>
-              <button className='text-lg font-semibold bg-blue-500 px-3 py-1 rounded-md cursor-pointer'>Add Product</button>
-              <button className='text-lg font-semibold bg-green-700 px-3 py-1 rounded-md cursor-pointer'>Command</button>
+              <h1 className='text-3xl font-semibold'>Your products</h1>
             </div>
           </div>
         </div>
