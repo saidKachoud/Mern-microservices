@@ -1,9 +1,11 @@
-const { request, response } = require("express");
 const Product = require("../models/Product");
 
 const getProducts = async (request, response) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find({
+      productOwnerUsername: { $ne: request.user?.userName },
+    }).sort({ createdAt: -1 });
+
     if (products) {
       return response.json({
         products: products,
@@ -12,6 +14,28 @@ const getProducts = async (request, response) => {
 
     return response.status(404).json({
       message: "No products founded",
+    });
+  } catch (error) {
+    response.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+const getMyProducts = async (request, response) => {
+  try {
+    const products = await Product.find({
+      productOwnerUsername: request.user.userName,
+    }).sort({ createdAt: -1 });
+
+    if (!products) {
+      return response.status(404).json({
+        message: "No posted products",
+      });
+    }
+
+    return response.json({
+      products: products,
     });
   } catch (error) {
     response.status(500).json({
@@ -36,6 +60,7 @@ const postProduct = async (request, response) => {
       description,
       image: imageUrl,
       price,
+      productOwnerUsername: request.user.userName,
     });
     await newProduct.save();
 
@@ -52,10 +77,18 @@ const postProduct = async (request, response) => {
 
 const deleteProduct = async (request, response) => {
   try {
-    await Product.findByIdAndDelete(request.params.productId);
+    const product = await Product.findOneAndDelete({
+      productOwnerUsername: request.user?.userName,
+      _id: request.params.productId,
+    });
 
-    return response.status(404).json({
-      message: "Product not found",
+    if (!product) {
+      return response.status(401).json({
+        message: "Unauthorized to delete this product",
+      });
+    }
+    return response.json({
+      message: "Product deleted successfully",
     });
   } catch (error) {
     response.status(500).json({
@@ -64,4 +97,4 @@ const deleteProduct = async (request, response) => {
   }
 };
 
-module.exports = { getProducts, postProduct, deleteProduct };
+module.exports = { getProducts, getMyProducts, postProduct, deleteProduct };
