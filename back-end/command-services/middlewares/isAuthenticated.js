@@ -3,7 +3,7 @@ require("dotenv").config()
 
 const isAuthenticated = (request,response,next) =>{
     try{
-        const token = request.headers['authorization']?.split(' ')[1];
+        const token = request.headers['Authorization']?.split(' ')[1];
 
         if(!token){
             return response.status(401).json({
@@ -11,15 +11,15 @@ const isAuthenticated = (request,response,next) =>{
             })
         }
 
-        jwt.verify(token,process.env.SECRET_KEY, (err,user)=>{
-            if(err){
+        jwt.verify(token,process.env.SECRET_KEY, (error,user)=>{
+            if(error){
                 return response.status(401).json({
-                    'message' : err.message
+                    'message' : 'Invalid token'
                 })
             }
 
             request.user = user;
-            return next();
+            next();
         });
     }catch(error){
         return response.status(500).json({
