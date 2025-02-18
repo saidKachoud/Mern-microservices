@@ -16,7 +16,6 @@ export const Register = () => {
     password: "",
     retypePassword: "",
   });
-  console.log(formRegister);
   
   const [notification, setNotification] = useState({});
   const [loading,setLoading] = useState(false);
@@ -45,7 +44,7 @@ export const Register = () => {
       if(response.status === 200){
         setSended(true);
         setTimeout(() => {
-          navigate("/products");
+          navigate("/login");
         }, 3000);
       }
     }catch(error){
@@ -60,9 +59,7 @@ export const Register = () => {
 
   return (
       <>
-      {
-        !sended
-        ?
+      
           <form onSubmit={handleSubmit}>
             <div className="flex items-center mt-20 ">
               <div className="bg-black flex flex-col gap-5 justify-center p-5 pt-6 mx-auto shadow-2xl border rounded-md border-gray-300">
@@ -125,6 +122,12 @@ export const Register = () => {
                     onChange={handleChange}
                   />
                 </div>
+                {
+                  sended && <div className="text-center">
+                      <h2>Success! registered successfully</h2>
+                      <LinearProgress />
+                    </div>
+                }
                 <div>
                   <Button type="Submit" text="Sign up" loading={loading}/>
                 </div>
@@ -133,17 +136,8 @@ export const Register = () => {
                 notification && <Notification type={notification.type} message={notification.message} />
               }
             </div>
-            
           </form>
-        : null
-      }
-      {
-        sended ?<>
-        <LinearProgress />
-        <h2>success registered successfully</h2>
-        </>
-        :null
-      }
+      
       </>    
   );
 };
