@@ -26,12 +26,13 @@ export const Login = () => {
     setLoading(true);
     try {
       const response = await postDataLogin(formData);
-      console.log(response);
       
       setLoading(false);
       if(response.status === 200){
-        navigate("/products")
+        localStorage.setItem(response.data.token);
+        navigate("/products");
       }
+
     } catch (error) {
       setLoading(false);
       if (error.response) {
