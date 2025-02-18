@@ -6,7 +6,7 @@ require("dotenv").config()
 
 const login = async (request, response) => {
     try{
-        const { email, password } = request.body;
+        const { email, password } = request.body;        
 
         const user = await User.findOne({ email });
         if (!user) return response.status(400).json({ message: "Invalid credentials" });
