@@ -1,12 +1,17 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
+
 const {registerUser,login} = require("./controllers/userController");
 const dbConnection = require("./config/dbConnection");
 const server = express();
 
+
 dbConnection();
 
-server.use(express.json())
+server.use(cors());
+server.use(express.json());
+
 
 server.post("/login", login);
 server.post("/register", registerUser);

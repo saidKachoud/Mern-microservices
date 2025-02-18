@@ -13,7 +13,7 @@ export const Login = () => {
     email: "",
     password: "",
   });
-  console.log(formData)
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,9 +26,12 @@ export const Login = () => {
     setLoading(true);
     try {
       const response = await postDataLogin(formData);
+      console.log(response);
+      
       setLoading(false);
-      localStorage.setItem("token", response.data.token);
-      navigate("/home")
+      if(response.status === 200){
+        navigate("/products")
+      }
     } catch (error) {
       setLoading(false);
       if (error.response) {
