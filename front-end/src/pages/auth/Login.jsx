@@ -26,10 +26,11 @@ export const Login = () => {
     setLoading(true);
     try {
       const response = await postDataLogin(formData);
+      console.log(response);
       
       setLoading(false);
       if(response.status === 200){
-        localStorage.setItem(response.data.token);
+        localStorage.setItem('token',response.data.token);
         navigate("/products");
       }
 
@@ -51,7 +52,7 @@ export const Login = () => {
         <div className="bg-dark border border-gray-300 rounded-md shadow-2xl flex flex-col justify-evenly w-[85%] h-[75%] sm:w-[500px] sm:h-[400px] p-3 sm:p-6">
           <div>
             <h1 className="text-4xl">login</h1>
-            <h4 className="mt-2">if you went to <Link className="text-blue-600 underline" to="/register">Sign up</Link></h4>
+            <h4 className="mt-2">if you went to create account<Link className="text-blue-600 underline" to="/register">Sign up</Link></h4>
           </div>
           <div>
             <Label text={"Email"} />

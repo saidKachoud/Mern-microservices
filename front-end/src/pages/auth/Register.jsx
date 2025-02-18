@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { Input } from "../../components/UI/Input";
 import { Label } from "../../components/UI/Label";
 import { Button } from "../../components/UI/Button";
 import { Notification } from "../../components/UI/Notification";
 import { postDataRegister } from "../../services/userServices";
+import { LinearProgress } from "@mui/material";
 
 export const Register = () => {
   const [formRegister, setFormSingUp] = useState({
@@ -20,6 +21,8 @@ export const Register = () => {
   const [notification, setNotification] = useState({});
   const [loading,setLoading] = useState(false);
   const [sended,setSended] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +44,9 @@ export const Register = () => {
       setLoading(false)
       if(response.status === 200){
         setSended(true);
+        setTimeout(() => {
+          navigate("/products");
+        }, 3000);
       }
     }catch(error){
       setLoading(false);
@@ -69,28 +75,26 @@ export const Register = () => {
                     </Link>
                   </h4>
                 </div>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div>
-                    <Label text={"First name"} />
-                    <Input
-                      type={"text"}
-                      name={"username"}
-                      placholder={"ex:John"}
-                      value={formRegister.username}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div>
-                    <Label text={"Last name"} />
-                    <Input
-                      type={"text"}
-                      name={"fullName"}
-                      placholder={"ex:doe"}
-                      value={formRegister.fullName}
-                      onChange={handleChange}
-                    />
-                  </div>
+                <div>
+                  <Label text={"Full name"} />
+                  <Input
+                    type={"text"}
+                    name={"fullName"}
+                    placholder={"ex:John doe"}
+                    value={formRegister.fullName}
+                    onChange={handleChange}
+                  />
                 </div>
+                <div>
+                  <Label text={"Username"} />
+                  <Input
+                    type={"text"}
+                    name={"username"}
+                    placholder={"ex:bijjou01"}
+                    value={formRegister.username}
+                    onChange={handleChange}
+                  />
+                </div> 
                 <div>
                   <Label text={"Email"} />
                   <Input
@@ -131,7 +135,14 @@ export const Register = () => {
             </div>
             
           </form>
-        : <Verification formData={formRegister}/>
+        : null
+      }
+      {
+        sended ?<>
+        <LinearProgress />
+        <h2>success registered successfully</h2>
+        </>
+        :null
       }
       </>    
   );

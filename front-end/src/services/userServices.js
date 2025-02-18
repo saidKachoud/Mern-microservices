@@ -10,3 +10,11 @@ export const postDataRegister = async (data) =>{
     return response;
 }
 
+export const logout = async (token) =>{
+    const response = await axios.post(`${user_micro_services}/logout`,null,{
+        headers : {
+            Authorization : `Bearer ${token}`
+        }
+    });
+    return response;
+}

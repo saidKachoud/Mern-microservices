@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/User")
 require("dotenv").config()
 
+let invalidTokens = new Set();
+
 const login = async (request, response) => {
     try{
         const { email, password } = request.body;        
@@ -73,4 +75,18 @@ const registerUser = async (request, response)=>{
       }
 }
 
-module.exports = { login ,registerUser };
+
+const logout = (request,response) =>{
+
+    const token = request.headers['authorization'].split(' ')[1];
+    if(!token){
+        return response.status(401).json({
+            'message' : 'No token provided'
+        })
+    }
+    invalidTokens.add(token);
+    return response.json({
+        'message' : 'Logged out suucessfully!'
+    });
+}
+module.exports = { login ,registerUser , logout };
