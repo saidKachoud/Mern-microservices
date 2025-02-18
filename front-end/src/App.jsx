@@ -5,6 +5,7 @@ import { MyProducts } from './pages/main/MyProducts';
 import { Login } from './pages/auth/Login';
 import { IsAuthenticated } from './pages/auth/IsAuhenticated';
 import { NotFound } from './pages/error/NotFound';
+import { Register } from './pages/auth/Register';
 const serverExpress = import.meta.env.VITE_USER_SERVER;
 
 export const App = () => {
@@ -14,9 +15,11 @@ export const App = () => {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='*' element={<NotFound />} />
+        <Route path='/register' element={<Register />} />
         <Route element={<IsAuthenticated />}>
           <Route path='/products' element={<Products />} />
-          <Route path='/my_products' element={<MyProducts />} /></Route>
+          <Route path='/my_products' element={<MyProducts />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
