@@ -4,10 +4,12 @@ require("dotenv").config();
 const upload = require("./upload");
 const { postProduct, getProducts, deleteProduct, getMyProducts } = require("./controllers/productController");
 const isAuthenticated = require("./middlewares/isAuthenticated");
+const cors = require("cors")
 
 const server = express();
 dbConnection();
 
+server.use(cors());
 server.use(express.json());
 server.use("/images", express.static("public/images"));
 
