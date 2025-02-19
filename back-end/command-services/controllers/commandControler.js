@@ -1,4 +1,3 @@
-const command = require("../models/command");
 const Command = require("../models/command");
 require("dotenv").config();
 const getCommands = async (request, response) => {
