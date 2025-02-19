@@ -5,6 +5,7 @@ import { getProducts } from "../../services/productServices";
 import { Button } from "../../components/UI/Button";
 import { AddProduct } from "../../components/modals/AddProduct";
 import { postCommmand } from "../../services/commandSevices";
+import { Notification } from "../../components/UI/Notification";
 
 export const Products = () => {
   const [loading, setLoading] = useState(true);
@@ -12,29 +13,35 @@ export const Products = () => {
   const [productListSelected, setProductListSelected] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [notification, setNotification] = useState({});
+  const [commandLoading, setCommandLoading] = useState(false);
 
   const getProducts_FUNCTION = async () => {
     const response = await getProducts(localStorage.getItem("token"));
     setLoading(false);
     setProducts(response.data.products);
-    console.log(response);
   };
 
   const addCommmand = async () => {
     setNotification(null);
-    // try {
-      const response = await postCommmand(localStorage.getItem("token"),productListSelected);
-      console.log(productListSelected);
-      
-
-      console.log(response);
-    // } catch (error) {
-    //   if (error.response) {
-    //     setNotification({ type: "error", message: error.response.message });
-    //   } else {
-    //     setNotification({ type: "error", message: "try later again" });
-    //   }
-    // }
+    setCommandLoading(true);
+    try {
+      const response = await postCommmand(
+        localStorage.getItem("token"),
+        productListSelected
+      );
+      setCommandLoading(false);
+      setNotification({ type: "success", message: response.data.message });
+    } catch (error) {
+      setCommandLoading(false);
+      if (error.response) {
+        setNotification({
+          type: "error",
+          message: error.response.data.message,
+        });
+      } else {
+        setNotification({ type: "error", message: "try later again" });
+      }
+    }
   };
 
   useEffect(() => {
@@ -53,6 +60,7 @@ export const Products = () => {
             <div className="flex gap-2 w-[25%]">
               <Button text={"Add Product"} onClick={() => setOpenModal(true)} />
               <Button
+                loading={commandLoading}
                 text={"Command"}
                 bg={"bg-green-600"}
                 onClick={addCommmand}
@@ -73,6 +81,12 @@ export const Products = () => {
               })
             : "No products founded"}
           {openModal && <AddProduct setOpen={setOpenModal} />}
+          {notification && (
+            <Notification
+              type={notification.type}
+              message={notification.message}
+            />
+          )}
         </div>
       </div>
     </div>

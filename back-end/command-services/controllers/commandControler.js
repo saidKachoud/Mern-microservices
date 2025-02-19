@@ -4,12 +4,12 @@ require("dotenv").config();
 const getCommands = async (request, response) => {
   try {
     const commands = await Command.find({
-      email: request.user?.email,
+      email: request.user?.userEmail,
     }).sort({ createdAt: -1 });
 
     if (commands) {
       return response.json({
-        commands,
+        commands: commands,
       });
     }
 
@@ -17,7 +17,7 @@ const getCommands = async (request, response) => {
       message: "No commands founded",
     });
   } catch (error) {
-    response.status(500).json({
+    return response.status(500).json({
       message: error.message,
     });
   }
@@ -32,12 +32,14 @@ const postCommand = async (request, response) => {
     }
 
     const response_FROM_PRODUCTS_SERVICE = await axios.get(
-      `${process.env.PRODUCT_URL}/getPriceTotal`, 
+      `${process.env.PRODUCT_URL}/getPriceTotal`,
       {
         params: { products },
         headers: {
-          Authorization: `Bearer ${request.headers['authorization'].split(' ')[1]}`
-        }
+          Authorization: `Bearer ${
+            request.headers["authorization"].split(" ")[1]
+          }`,
+        },
       }
     );
 
@@ -52,23 +54,21 @@ const postCommand = async (request, response) => {
     await newCommand.save();
 
     return response.json({
-      message: "Product added successfully",
+      message: "Command added successfully",
       command: newCommand,
     });
-
   } catch (error) {
-    console.error(error); 
+    console.error(error);
     response.status(500).json({
       message: error.message || "An error occurred",
     });
   }
 };
 
-
 const deleteCommand = async (request, response) => {
   try {
     const command = await Command.findByIdAndDelete({
-      email: request.user?.email,
+      email: request.user?.userEmail,
       _id: request.params.commandId,
     });
     if (!command) {
