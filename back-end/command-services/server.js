@@ -6,14 +6,18 @@ const {
   getCommands,
   deleteCommand,
 } = require("./controllers/commandControler");
+const cors = require("cors");
+const isAuthenticated = require("./middlewares/isAuthenticated");
 const server = express();
 
 dbconnection();
 server.use(express.json());
+server.use(cors);
 
-server.post("/getCommand", getCommands);
-server.post("/addCommand", postCommand);
-server.post("/deleteCommand/:commandId", deleteCommandCommand);
+server.get("/getCommands", isAuthenticated, getCommands);
+
+server.post("/addCommand", isAuthenticated, postCommand);
+server.delete("/deleteCommand/:commandId", isAuthenticated, deleteCommand);
 
 server.listen(process.env.PORT, () => {
   console.log(`Command services listenning on PORT ${process.env.PORT}`);
