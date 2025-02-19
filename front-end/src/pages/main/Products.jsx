@@ -22,20 +22,19 @@ export const Products = () => {
 
   const addCommmand = async () => {
     setNotification(null);
-    try {
-      const response = await postCommmand(
-        localStorage.getItem("token"),
-        productListSelected
-      );
+    // try {
+      const response = await postCommmand(localStorage.getItem("token"),productListSelected);
+      console.log(productListSelected);
+      
 
       console.log(response);
-    } catch (error) {
-      if (error.response) {
-        setNotification({ type: "error", message: error.response.message });
-      } else {
-        setNotification({ type: "error", message: "try later again" });
-      }
-    }
+    // } catch (error) {
+    //   if (error.response) {
+    //     setNotification({ type: "error", message: error.response.message });
+    //   } else {
+    //     setNotification({ type: "error", message: "try later again" });
+    //   }
+    // }
   };
 
   useEffect(() => {
