@@ -12,10 +12,9 @@ const server = express();
 
 dbconnection();
 server.use(express.json());
-server.use(cors);
+server.use(cors());
 
 server.get("/getCommands", isAuthenticated, getCommands);
-
 server.post("/addCommand", isAuthenticated, postCommand);
 server.delete("/deleteCommand/:commandId", isAuthenticated, deleteCommand);
 

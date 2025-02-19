@@ -77,27 +77,28 @@ const postProduct = async (request, response) => {
 
 const getPriceTotal = async (request, response) => {
   try {
-    const { products } = request.query;
+    const products = request.query.products;
 
     if (!Array.isArray(products)) {
       return response.status(400).json({ message: "Invalid product list" });
     }
 
+    const productIds = products.map((product) => product.id); 
+
     const _products = await Promise.all(
-      products.map(async (product) => {
-        return await Product.findById(product.id);
-      })
+      productIds.map(async (id) => await Product.findById(id))
     );
 
     const totalPrice = _products
       .filter((product) => product !== null)
       .reduce((sum, product) => sum + product.price, 0);
 
-    return response.status(400).json({ totalPrice });
+    return response.json({ totalPrice });
   } catch (error) {
     response.status(500).json({ message: error.message });
   }
 };
+
 
 const deleteProduct = async (request, response) => {
   try {

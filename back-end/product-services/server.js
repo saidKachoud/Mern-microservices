@@ -21,14 +21,9 @@ server.use("/images", express.static("public/images"));
 
 server.get("/getProducts", isAuthenticated, getProducts);
 server.get("/getMyProducts", isAuthenticated, getMyProducts);
-server.post(
-  "/addProduct",
-  upload.single("image"),
-  isAuthenticated,
-  postProduct
-);
-server.delete("/deleteProduct/:productId", isAuthenticated, deleteProduct);
 server.get("/getPriceTotal", isAuthenticated, getPriceTotal);
+server.post("/addProduct",upload.single("image"),isAuthenticated,postProduct);
+server.delete("/deleteProduct/:productId", isAuthenticated, deleteProduct);
 
 server.listen(process.env.PORT, () => {
   console.log(`Product services listenning on PORT ${process.env.PORT}`);

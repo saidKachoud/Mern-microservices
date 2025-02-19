@@ -1,3 +1,4 @@
+const { default: axios } = require("axios");
 const Command = require("../models/command");
 require("dotenv").config();
 const getCommands = async (request, response) => {
@@ -24,27 +25,45 @@ const getCommands = async (request, response) => {
 
 const postCommand = async (request, response) => {
   try {
-    const { products } = request.body;
-    const response = await axios.get(
-      `${process.env.PRODUCT_URL}/getPriceTotal?products=${products}`
+    const products = request.body.data;
+
+    if (!Array.isArray(products)) {
+      return response.status(400).json({ message: "Invalid product list" });
+    }
+
+    const response_FROM_PRODUCTS_SERVICE = await axios.get(
+      `${process.env.PRODUCT_URL}/getPriceTotal`, 
+      {
+        params: { products },
+        headers: {
+          Authorization: `Bearer ${request.headers['authorization'].split(' ')[1]}`
+        }
+      }
     );
-    const _totalPrice = response.data.totalPrice;
+
+    const _totalPrice = response_FROM_PRODUCTS_SERVICE.data.totalPrice;
+
     const newCommand = new Command({
-      email: request.user.email,
+      email: request.user.userEmail,
       products,
       price_Total: _totalPrice,
     });
+
     await newCommand.save();
+
     return response.json({
       message: "Product added successfully",
       command: newCommand,
     });
+
   } catch (error) {
+    console.error(error); 
     response.status(500).json({
-      message: error.message,
+      message: error.message || "An error occurred",
     });
   }
 };
+
 
 const deleteCommand = async (request, response) => {
   try {
