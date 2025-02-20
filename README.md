@@ -49,7 +49,7 @@ Make sure you have the following installed:
 ### Clone the Repository
 ```sh
 git clone https://github.com/sofyanBoukir/MERN-microservices.git
-cd Mern-microservices
+cd MERN-microservices
 ```
 
 ### Backend Setup
