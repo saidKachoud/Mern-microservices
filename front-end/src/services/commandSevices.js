@@ -24,8 +24,8 @@ export const getCommmands = async (token) => {
   return response;
 };
 
-export const deleteCommmand = async (token, command_id) => {
-  const response = await axios.get(
+export const deleteCommmandById = async (token, command_id) => {
+  const response = await axios.delete(
     `${command_micro_services}/deleteCommand/${command_id}`,
     {
       headers: {

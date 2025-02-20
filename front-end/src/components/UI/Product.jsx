@@ -35,11 +35,18 @@ export const Product = ({
             <input
               type="checkbox"
               className="w-4 h-4 cursor-pointer"
-              onChange={() => {
-                selectedlist([
-                  ...productSelected,
-                  { id: product._id, name: product.name },
-                ]);
+              onChange={(e) => {
+                if (!e.target.checked) {
+                  const list = productSelected.filter(
+                    (item) => item.id !== product._id
+                  );
+                  selectedlist(list);
+                } else {
+                  selectedlist([
+                    ...productSelected,
+                    { id: product._id, name: product.name },
+                  ]);
+                }
               }}
             />
           )}

@@ -77,8 +77,8 @@ const deleteCommand = async (request, response) => {
       });
     }
 
-    return response.status(404).json({
-      message: "Product deleted successfully",
+    return response.status(200).json({
+      message: "Command deleted successfully",
     });
   } catch (error) {
     response.status(500).json({

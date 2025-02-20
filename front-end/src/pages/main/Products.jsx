@@ -22,8 +22,8 @@ export const Products = () => {
   };
 
   const addCommmand = async () => {
-    setNotification(null);
     setCommandLoading(true);
+    setNotification(null);
     try {
       const response = await postCommmand(
         localStorage.getItem("token"),
@@ -31,6 +31,7 @@ export const Products = () => {
       );
       setCommandLoading(false);
       setNotification({ type: "success", message: response.data.message });
+      setProductListSelected([]);
     } catch (error) {
       setCommandLoading(false);
       if (error.response) {
@@ -73,6 +74,7 @@ export const Products = () => {
             ? products.map((product) => {
                 return (
                   <Product
+                    key={product._id}
                     product={product}
                     selectedlist={setProductListSelected}
                     productSelected={productListSelected}
