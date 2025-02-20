@@ -56,7 +56,7 @@ export const Products = () => {
         <div>
           <div className="flex justify-between">
             <div>
-              <h1 className="text-3xl font-semibold">Products goes here</h1>
+              <h1 className="text-3xl font-semibold">Products</h1>
             </div>
             <div className="flex gap-2 w-[25%]">
               <Button text={"Add Product"} onClick={() => setOpenModal(true)} />
