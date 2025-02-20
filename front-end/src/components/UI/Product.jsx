@@ -13,7 +13,7 @@ export const Product = ({
   productSelected,
 }) => {
   return (
-    <div className="bg-gray-800 rounded-lg px-3 py-3 w-[23%]">
+    <div className="bg-gray-100 rounded-lg px-3 py-3 w-[23%]">
       <div>
         <div className="flex justify-between items-center">
           <span className="font-semibold">

@@ -62,12 +62,12 @@ export const Register = () => {
       
           <form onSubmit={handleSubmit}>
             <div className="flex items-center mt-20 ">
-              <div className="bg-black flex flex-col gap-5 justify-center p-5 pt-6 mx-auto shadow-2xl border rounded-md border-gray-300">
+              <div className="bg-gray-100 flex flex-col gap-5 justify-center p-5 pt-6 mx-auto shadow-2xl border rounded-md border-gray-300">
                 <div className="mb-6">
                   <h1 className="text-4xl mb-2">Sign up</h1>
                   <h4>
                     Already have an account?&nbsp;
-                    <Link to={"/login"} className="text-blue-500 underline">
+                    <Link to={"/"} className="text-blue-500 underline">
                       Sign in
                     </Link>
                   </h4>

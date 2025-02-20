@@ -1,4 +1,3 @@
-// here will stock the login function and register
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("../models/User")

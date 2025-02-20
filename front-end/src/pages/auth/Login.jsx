@@ -45,14 +45,14 @@ export const Login = () => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex justify-center items-center h-[100vh]">
+      <div className="flex justify-center items-center bg-gray-100 h-[100vh]">
         <div className="bg-dark border border-gray-300 rounded-md shadow-2xl flex flex-col justify-evenly w-[85%] h-[75%] sm:w-[500px] sm:h-[400px] p-3 sm:p-6">
           <div>
             <h1 className="text-4xl">login</h1>
             <h4 className="mt-2">
-              if you went to create account
+              Don't have an account? 
               <Link className="text-blue-600 underline" to="/register">
-                Sign up
+                 Sign up
               </Link>
             </h4>
           </div>

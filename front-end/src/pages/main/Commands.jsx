@@ -66,20 +66,23 @@ export const Commands = () => {
   return (
     <div className="flex">
       <SideBar />
-      <div className="mt-7 ml-[18%] w-[80%] flex flex-wrap gap-2">
-        {listCommands && listCommands.length
+
+      <div className="mt-7 ml-[18%] w-[80%]">
+        <h1 className="text-3xl font-semibold inline-block">Your commands</h1>
+        <div className=" flex flex-wrap gap-2">
+          {listCommands && listCommands.length
           ? listCommands.map((command) => {
               return (
                 <div
                   key={command._id}
-                  className="bg-gray-800 rounded-lg px-3 py-3 w-[30%]"
+                  className="bg-gray-100 rounded-lg px-3 py-3 w-[30%]"
                   onClick={() => setOpenList({})}
                 >
                   <div className="flex justify-between items-start">
                     <div className="mt-2">
                       <span
                         id={command._id}
-                        className="block cursor-pointer hover:text-blue-200"
+                        className="block cursor-pointer hover:text-blue-500"
                         onClick={(e) => {
                           e.stopPropagation();
 
@@ -100,9 +103,9 @@ export const Commands = () => {
                         ))}
                       </ul>
                       <h1 className="text-2xl font-semibold mt-1">
-                        {command.price_Total}DH
+                        <span className="text-sm">Total price:</span> <span className="text-blue-900">{command.price_Total}DH</span>
                       </h1>
-                      <span className="font-semibold block mt-1">
+                      <span className="font-semibold block mt-1 text-sm">
                         Posted {moment(command.createdAt).fromNow()}
                       </span>
                     </div>
@@ -126,6 +129,7 @@ export const Commands = () => {
               );
             })
           : "No command founded"}
+        </div>
         {notification && (
           <Notification
             type={notification.type}

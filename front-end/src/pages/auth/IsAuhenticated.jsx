@@ -6,6 +6,6 @@ export const IsAuthenticated = () =>{
     const isAuth = token ? true : false;
 
     return (
-        isAuth ? <Outlet /> : <Navigate to={'/login'} />
+        isAuth ? <Outlet /> : <Navigate to={'/'} />
     )
 } 
